@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,6 +10,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+import { AppContext, ActionTypes } from '../states';
 
 const drawerWidth = 240;
 
@@ -28,13 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface ResponsiveDrawerProps {
-  open?: boolean;
-  onClose?: () => void;
-}
-
-const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
-  console.log('Rendser ResponsiveDrawer');
+const ResponsiveDrawer: React.FC = () => {
   const classes = useStyles();
   const drawer = (
     <div>
@@ -60,14 +56,20 @@ const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
     </div>
   );
 
+  const { state, dispatch } = useContext(AppContext);
+
+  const closeSideNav = () => {
+    dispatch({type: ActionTypes.CLOSE_SIDE_NAV});
+  }
+
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Hidden smUp implementation="css">
         <Drawer
           variant="temporary"
-          open={props.open}
-          onClose={props.onClose}
+          open={state.mobileSideOpen}
+          onClose={closeSideNav}
           classes={{
             paper: classes.drawerPaper,
           }}

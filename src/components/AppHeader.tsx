@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -9,10 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-
-interface AppHeaderProps {
-  onClickMenu: () => void;
-}
+import { AppContext, ActionTypes } from '../states';
 
 const drawerWidth = 240;
 
@@ -35,8 +32,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AppHeader: React.FC<AppHeaderProps> = (props) => {
+const AppHeader: React.FC = () => {
   const classes = useStyles();
+  const { dispatch } = useContext(AppContext);
+
+  const openSideNav = () => {
+    dispatch({type: ActionTypes.OPEN_SIDE_NAV});
+  }
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -45,7 +47,7 @@ const AppHeader: React.FC<AppHeaderProps> = (props) => {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={props.onClickMenu}
+          onClick={openSideNav}
           className={classes.menuButton}
         >
           <MenuIcon />
