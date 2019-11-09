@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import { AppContext, ActionTypes } from '../states';
+import AuthenMenu from './AuthenMenu';
 
 const drawerWidth = 240;
 
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       color: 'white'
     },
+    flexSpace: {
+      flex: 1
+    }
   }),
 );
 
@@ -56,6 +60,8 @@ const AppHeader: React.FC = () => {
           <Link className={classes.link} to="/"><HomeIcon /></Link>
         </IconButton>
         <Button color="inherit"><Link to="/about" className={classes.link}>About</Link></Button>
+        <span className={classes.flexSpace}></span>
+        <AuthenMenu />
       </Toolbar>
     </AppBar>
   );
